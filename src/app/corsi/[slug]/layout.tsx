@@ -58,8 +58,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 // Il layout per i percorsi [slug] che avvolgerà il page.tsx
 export default function CourseLayout({
   children,
+  params,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  params: { slug: string };
 }) {
   return (
     <>
