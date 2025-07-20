@@ -1,15 +1,17 @@
-@import "tailwindcss";
+/* src/app/globals.css */
 
+/* Rimuovi completamente le seguenti righe: */
+/* @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700;900&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap'); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Le tue variabili CSS per il tema (mantienile se le usi) */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +21,131 @@
   }
 }
 
+/* Rimuovi completamente la seguente sezione (è gestita da Tailwind config e layout.tsx): */
+/*
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+*/
+/* Rimuovi completamente: */
+/*
+:root {
+  --font-heading: 'Maven Pro', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+*/
+
+
+/* Stili per i titoli (H1, H2, H3, H4, H5, H6) */
+/* Usa le classi utility di Tailwind definite in tailwind.config.js */
+
+h2, h3, h4, h5, h6 {
+  @apply font-heading text-primary leading-relaxed;
+}
+
+h2 {
+  @apply text-4xl mb-4;
+}
+
+h3 {
+  @apply text-3xl mb-3 mt-8;
+}
+
+h4 {
+  @apply text-2xl mb-2;
+}
+
+/* Stili per il titolo H1 della pagina */
+.page-title {
+  @apply font-heading text-primary text-5xl font-extrabold leading-tight mb-4;
+}
+
+/* Stili per il separatore orizzontale sotto l'H1 */
+.title-separator {
+  @apply w-24 h-1 bg-primary mb-8;
+}
+
+/* Stili per gli elementi generati da WordPress tramite 'dangerouslySetInnerHTML' */
+/* Se usi @tailwindcss/typography (plugin 'prose') */
+.prose {
+    /* Imposta il font base per il contenuto di prose. Normalmente non serve se body è già settato. */
+    /* Ma per sicurezza e per affrontare strong, aggiungiamo questo */
+    @apply font-sans;
+}
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply font-heading text-primary leading-relaxed;
+}
+.prose h1 { @apply text-5xl font-extrabold leading-tight mb-4; }
+.prose h2 { @apply text-4xl mb-4; }
+.prose h3 { @apply text-3xl mb-3 mt-8; }
+.prose h4 { @apply text-2xl mb-2; }
+
+/* Aggiungi questa regola per assicurarti che il tag strong usi il font corretto */
+.prose strong {
+  @apply font-sans; /* O font-heading se vuoi che i bold siano in Maven Pro */
+}
+
+.page-title {
+  @apply text-3xl font-bold text-[#38b5ad] mb-4 font-heading text-left; /* Assicurati che sia text-left */
+}
+
+.title-separator {
+  @apply w-16 h-1 bg-[#38b5ad] mb-8; /* Larghezza di 16 unità, altezza 1 */
+}
+
+/* Effetto Ken Burns */
+.ken-burns-effect {
+  animation: kenBurns 20s ease-in-out infinite alternate; /* 20s durata, loop, alterna avanti e indietro */
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    transform: scale(1.15) translateX(5%); /* Aumenta leggermente lo zoom e sposta a destra */
+  }
+}
+
+/* Stile per i bottoni generali (opzionale, ma utile) */
+.btn-primary {
+  @apply inline-flex items-center px-6 py-3 bg-[#38b5ad] text-white font-bold rounded-full shadow-lg hover:bg-[#2a9a93] transition-colors duration-300 transform hover:-translate-y-1;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center px-6 py-3 bg-gray-600 text-white font-bold rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-300 transform hover:-translate-y-1;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply !w-10 !h-10 rounded-full bg-white text-[#38b5ad] flex items-center justify-center transition-all duration-300; /* Dimensioni piccole, tondo, sfondo bianco, testo colore primario */
+  @apply shadow-md hover:scale-110; /* Ombra e leggero ingrandimento all'hover */
+}
+
+/* Colore delle icone freccia */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  @apply !text-xl !font-bold; /* Rendi le icone più visibili e forti */
+  color: #38b5ad !important; /* Forza il colore delle frecce Swiper */
+}
+
+/* Posizionamento delle frecce (opzionale, se vuoi più/meno distanza dai bordi) */
+.swiper-button-next {
+  @apply !right-4 md:!right-8; /* Sposta a destra */
+}
+
+.swiper-button-prev {
+  @apply !left-4 md:!left-8; /* Sposta a sinistra */
+}
+
+/* Nascondi le frecce sui dispositivi touch per evitare sovrapposizioni, Swiper gestisce già lo swipe */
+@media (pointer: coarse) { /* Target devices with touch capabilities */
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
 }
