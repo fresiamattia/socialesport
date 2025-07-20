@@ -40,7 +40,7 @@ interface Course {
   };
   acf?: {
     sottotitolo?: string;
-    brochure_piscina?: string; // We'll look for a brochure from any course for the CTA
+    brochure_piscina?: string; 
     brochure_multisport?: string;
     brochure_fitness?: string;
   };

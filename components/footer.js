@@ -40,7 +40,7 @@ function Footer() {
 
           {/* Titolo in Maven Pro, maiuscolo, grigio chiaro */}
           <h3 className="text-lg font-bold text-gray-400 mb-4 font-heading uppercase">Contributi Covid</h3>
-          <p className="text-sm mb-2">Sociale Sport ha beneficiato dei seguenti contributi per l'emergenza Covid-19:</p>
+          <p className="text-sm mb-2">Sociale Sport ha beneficiato dei seguenti contributi per l&#39;emergenza Covid-19:</p>
           {/* Rimosso l'elenco puntato, ora sono semplici paragrafi */}
           <p className="text-sm">Contributo fondo perduto covid 19 - 2.016,00€ in data 03/07/2020</p>
           <p className="text-sm">Contributo Regione Piemonte- 3.840,00€ in data 06/10/2020</p>
