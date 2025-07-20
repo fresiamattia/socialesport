@@ -1,16 +1,13 @@
-// src/app/corsi/[slug]/layout.tsx
-
+import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
-// URL base della tua installazione WordPress
+// WordPress API
 const WORDPRESS_API_URL = 'http://mattiaf245.sg-host.com/wp-json/wp/v2';
 
-// Interfaccia per i campi ACF specifici del CPT Corsi (solo quelli necessari per i metadati)
 interface CourseAcfFields {
   sottotitolo?: string;
 }
 
-// Interfaccia per un singolo corso (Post) (solo i campi necessari per i metadati)
 interface Course {
   id: number;
   slug: string;
@@ -18,11 +15,11 @@ interface Course {
   acf?: CourseAcfFields;
 }
 
-// Funzione per recuperare un corso tramite slug (copia da page.tsx, questa sarà lato server)
+// Recupero dati
 async function getCourseBySlugForMetadata(slug: string): Promise<Course | null> {
   try {
     const res = await fetch(`${WORDPRESS_API_URL}/corsi?slug=${slug}&_embed&acf_format=standard`, {
-      next: { revalidate: 3600 } // Revalida ogni ora
+      next: { revalidate: 3600 }
     });
 
     if (!res.ok) {
@@ -38,7 +35,7 @@ async function getCourseBySlugForMetadata(slug: string): Promise<Course | null> 
   }
 }
 
-// Funzione per generare i metadati della pagina (QUESTA È UNA SERVER FUNCTION)
+// Metadata dinamico
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const course = await getCourseBySlugForMetadata(params.slug);
 
@@ -51,21 +48,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title: `${course.title.rendered} | Corsi | Sociale Sport`,
-    description: course.acf?.sottotitolo ? course.acf.sottotitolo.replace(/(<([^>]+)>)/ig, '') : course.title.rendered,
+    description: course.acf?.sottotitolo?.replace(/(<([^>]+)>)/ig, '') ?? course.title.rendered,
   };
 }
 
-// Il layout per i percorsi [slug] che avvolgerà il page.tsx
+// ✅ Layout corretto con tipizzazione esplicita
 export default function CourseLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: { slug: string };
 }) {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
