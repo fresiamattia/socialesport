@@ -15,6 +15,12 @@ interface Course {
   acf?: CourseAcfFields;
 }
 
+// 🎯 AGGIUNGI QUESTA INTERFACCIA PER DEFINIRE I PROPS DI UN LAYOUT/PAGE DINAMICA
+interface LayoutProps {
+  children: ReactNode;
+  params: { slug: string }; // Definisce che 'params' conterrà 'slug' come stringa
+}
+
 // Recupero dati
 async function getCourseBySlugForMetadata(slug: string): Promise<Course | null> {
   try {
@@ -36,7 +42,8 @@ async function getCourseBySlugForMetadata(slug: string): Promise<Course | null> 
 }
 
 // Metadata dinamico
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+// 🎯 UTILIZZA LayoutProps QUI PER COERENZA
+export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const course = await getCourseBySlugForMetadata(params.slug);
 
   if (!course) {
@@ -52,13 +59,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-// ✅ Layout corretto con tipizzazione esplicita
+// Layout del corso
+// 🎯 UTILIZZA LayoutProps QUI
 export default function CourseLayout({
   children,
   params,
-}: {
-  children: ReactNode;
-  params: { slug: string };
-}) {
+}: LayoutProps) {
   return <>{children}</>;
 }
